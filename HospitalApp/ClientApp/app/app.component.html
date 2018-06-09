@@ -1,0 +1,89 @@
+﻿<h1>Список пациентов</h1>
+<input type="button" value="Добавить" class="btn btn-default" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Год рождения</td>
+            <td>Место жительства</td>
+            <td>Номер медицинского полиса</td>
+            <td>Номер паспорта</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of patients">
+            <ng-template [ngIf]="patient?.PatientId != p.PatientId" [ngIfElse]="edit">
+                <td>{{p?.FirstName}}</td>
+                <td>{{p?.LastName}}</td>
+                <td>{{p?.Year}}</td>
+                <td>{{p?.Location}}</td>
+                <td>{{p?.PolicyNumber}}</td>
+                <td>{{p?.Passport}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editPatient(p)">Изменить</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="patient.FirstName" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="patient.LastName" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="patient.Year" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="patient.Location" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="patient.PolicyNumber" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="patient.Passport" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<!--шаблон для добавления-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Имя</label>
+        <input type="text" [(ngModel)]="patient.FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Фамилия</label>
+        <input type="text" [(ngModel)]="patient.LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Год рождения</label>
+        <input type="text" [(ngModel)]="patient.Year" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Место жительства</label>
+        <input type="text" [(ngModel)]="patient.Location" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Номер медицинского полиса</label>
+        <input type="text" [(ngModel)]="patient.PolicyNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Номер паспорта</label>
+        <input type="text" [(ngModel)]="patient.Passport" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>

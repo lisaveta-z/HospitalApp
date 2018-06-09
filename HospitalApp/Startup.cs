@@ -38,7 +38,6 @@ namespace HospitalApp
             {
                 app.UseDeveloperExceptionPage();
 
-                // добавляем сборку через webpack
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true
@@ -47,6 +46,7 @@ namespace HospitalApp
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseMvc();
         }
 
         //public void Configure(IApplicationBuilder app, IHostingEnvironment env)
