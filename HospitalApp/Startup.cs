@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,46 +31,28 @@ namespace HospitalApp
             services.AddMvc();
         }
 
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                // добавляем сборку через webpack
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
-            app.UseDefaultFiles();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
-
-        //public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        //{
-        //    if (env.IsDevelopment())
-        //    {
-        //        app.UseDeveloperExceptionPage();
-        //    }
-        //    else
-        //    {
-        //        app.UseExceptionHandler("/Home/Error");
-        //        app.UseHsts();
-        //    }
-
-        //    app.UseHttpsRedirection();
-        //    app.UseStaticFiles();
-        //    app.UseCookiePolicy();
-
-        //    app.UseMvc(routes =>
-        //    {
-        //        routes.MapRoute(
-        //            name: "default",
-        //            template: "{controller=Home}/{action=Index}/{id?}");
-        //    });
-        //}
     }
 }
