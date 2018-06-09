@@ -1,0 +1,29 @@
+﻿@model IEnumerable<HospitalApp.Models.Doctor>
+@{
+    ViewData["Title"] = "Врачи";
+}
+
+<h3>Список врачей</h3>
+
+<p>
+    @Html.ActionLink("Добавить нового врача", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <td>Специальность</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td></td>
+    </tr>
+    @foreach (var doctor in Model)
+    {
+        <tr>
+            <td>@doctor.Speciality.SpecialityName</td>
+            <td>@doctor.FirstName</td>
+            <td>@doctor.LastName</td>
+            <td>@Html.ActionLink("Редактировать", "Edit", new { id = doctor.DoctorId })</td>
+                        @*<a href="~/Home/Buy/@doctor.DoctorId">Edit</a>*@
+        </tr>
+    }
+</table>
